@@ -1,47 +1,17 @@
+import { useContext } from "react";
 import { BiUser } from "react-icons/bi";
 import { FaTasks } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { AppCtx } from "../../App";
+import TaskIcon from "../../components/task-icon";
+import { PendingTasksUi } from "../../components/tasks-optimstic-ui";
+import getReferralMessage from "../../../utils/get-referral-message";
 
 const Dashboard = () => {
-	const tasks = [
-		{
-			title: "Watch a promotional video",
-			timing: 5,
-			reward: 10,
-			link: "/dashboard/referrals"
-		},
-		{
-			title: "Follow OptimisticDev on YouTube",
-			timing: 2,
-			reward: 15,
-			link: "/dashboard/tasks"
-		},
-		{
-			title: "Subscribe to DependaBot Telegram channel",
-			timing: 2,
-			reward: 5,
-			link: ""
-		},
-		{
-			title: "Watch a promotional video",
-			timing: 5,
-			reward: 10,
-			link: ""
-		},
-		{
-			title: "Follow OptimisticDev on YouTube",
-			timing: 2,
-			reward: 15,
-			link: ""
-		},
-		{
-			title: "Subscribe to DependaBot Telegram channel",
-			timing: 2,
-			reward: 5,
-			link: ""
-		}
-	];
+	const { state } = useContext(AppCtx);
+	const { user, referees, pendingTasks, userTasks, tasks } = state;
+
 	return (
 		<div className="dashboard">
 			<header>
@@ -66,7 +36,7 @@ const Dashboard = () => {
 					</svg>
 				</div>
 				<Link to="./profile">
-					<BiUser /> onahvictor
+					<BiUser /> {user.username}
 				</Link>
 			</header>
 			<div className="main-container">
@@ -87,29 +57,61 @@ const Dashboard = () => {
 							transform="matrix(6.75 0 0 6.75 153.1 65)"
 						/>
 					</svg>
-					<h1>2,000 ANK</h1>
+					<h1>{user.balance.toLocaleString()} ANKR</h1>
 				</section>
 				<section className="referrals">
 					<FaUsers className="card-icon" />
 					<h3>Referrals</h3>
 					<div>
-						<h2>22</h2>
-						<p>You haven't referred anyone today</p>
+						<h2>{user.totalReferrals.toLocaleString()}</h2>
+						{referees ? (
+							<p className="fade-in">
+								{getReferralMessage(referees)}
+							</p>
+						) : (
+							<div
+								className="animate-pulse"
+								style={{
+									height: 16,
+									background: "#444",
+									borderRadius: 6
+								}}></div>
+						)}
 					</div>
 				</section>
 				<section className="tasks">
 					<FaTasks className="card-icon" />
 					<h3>Tasks</h3>
 					<div>
-						<div className="progress">
-							<div></div>
-						</div>
-						<div>
-							<sup>
-								<b>40</b>
-							</sup>
-							/<sub>100</sub>
-						</div>
+						{tasks ? (
+							<>
+								<div className="progress fade-in">
+									<div
+										style={{
+											width: `${
+												(user.totalTasksCompleted /
+													tasks.length) *
+												100
+											}%`
+										}}></div>
+								</div>
+								<div>
+									<sup>
+										<b>{user.totalTasksCompleted}</b>
+									</sup>
+									/<sub>{tasks.length}</sub>
+								</div>
+							</>
+						) : (
+							<div
+								className="animate-pulse"
+								style={{
+									height: 16,
+									background: "#444",
+									borderRadius: 6,
+									flex: 1
+								}}></div>
+						)}
 					</div>
 				</section>
 				<section className="available-tasks">
@@ -118,17 +120,32 @@ const Dashboard = () => {
 						<p>Complete tasks to earn more rewards.</p>
 					</div>
 					<div className="tasks-container">
-						{tasks.map(task => (
-							<div className="task" key={task.title}>
-								<div>
-									<h3>{task.title}</h3>
-									<p>
-										{task.timing} min • {task.reward} ANK
-									</p>
-								</div>
-								<Link to={task.link}>Start</Link>
-							</div>
-						))}
+						{pendingTasks ? (
+							pendingTasks
+								.sort(
+									(prev, next) =>
+										next.priority - prev.priority
+								)
+								.slice(0, 6)
+								.map((task, i) => (
+									<div className="task" key={task.title}>
+										<TaskIcon
+											platform={task.platform}
+											taskCategory={task.category}
+										/>
+										<div>
+											<h3>{task.title}</h3>
+											<p>{task.reward} ANKR</p>
+										</div>
+										<Link
+											to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
+											Start
+										</Link>
+									</div>
+								))
+						) : (
+							<PendingTasksUi />
+						)}
 					</div>
 				</section>
 			</div>

@@ -145,8 +145,7 @@ html {
 	transition: 0.2s linear transform;
 	margin-top: 1rem;
 	opacity: 0;
-	animation: animate-dot 1.5s 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-		forwards;
+	animation: animate-dot 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 	transition: 0.3s linear transform;
 	text-decoration: none;
 }
@@ -168,6 +167,15 @@ html {
 
 .landing-page *:not(.bloop) {
 	z-index: 1;
+}
+
+.landing-page .spinner-container {
+	opacity: 0;
+	animation: fade-in 1.5s 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.landing-page .spinner {
+	animation: spin 1s linear infinite;
 }
 
 .dashboard-layout {
@@ -207,18 +215,17 @@ html {
 }
 
 .dashboard-layout footer a {
-	padding: 0.5rem;
 	text-decoration: none;
 	position: relative;
 	color: inherit;
-	background-color: #444;
 	display: inline-flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	border-radius: 6px;
 	flex: 1;
+	gap: 0.1rem;
 	transition: 0.2s linear all;
+	background-clip: text;
 }
 
 .dashboard-layout footer a:active {
@@ -226,8 +233,19 @@ html {
 }
 
 .dashboard-layout footer a.active {
-	background-color: #2e72ff;
-	font-weight: 700;
+	color: #8cb2ff;
+	font-weight: 600;
+	transform: scale(1.1);
+	color: transparent;
+	background-image: linear-gradient(to right, #2e72ff, #7ba7ff);
+}
+
+.dashboard-layout footer a svg {
+	font-size: 0.75rem;
+}
+
+.dashboard-layout footer a.active svg {
+	color: #7ba7ff;
 }
 
 .dashboard {
@@ -375,7 +393,7 @@ html {
 }
 
 .dashboard .tasks > div,
-.tasks-page .container .tasks-progress div:nth-child(2) {
+.tasks-page .container .tasks-progress > div:nth-child(2) {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
@@ -392,9 +410,9 @@ html {
 .dashboard .tasks > div .progress div,
 .tasks-page .container .tasks-progress .progress > div {
 	height: 100%;
-	width: 40%;
 	background-image: linear-gradient(#2e72ff, #7ba7ff);
 	border-radius: 999px;
+	transition: 0.3s linear width;
 }
 
 .dashboard .available-tasks {
@@ -408,46 +426,53 @@ html {
 	font-size: 0.75rem;
 }
 
-.dashboard .available-tasks .tasks-container {
+.dashboard .available-tasks .tasks-container,
+.tasks-page .tasks-container .tasks {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
-.dashboard .available-tasks .task {
+.dashboard .available-tasks .task,
+.tasks-page .tasks-container .tasks > div {
 	display: flex;
 	gap: 1rem;
-	align-items: center;
+	align-items: start;
 }
 
-.dashboard .available-tasks .task div {
+.dashboard .available-tasks .task div,
+.tasks-page .tasks-container .tasks > div div {
 	flex: 1;
 }
 
-.dashboard .available-tasks .task h3 {
+.dashboard .available-tasks .task h3,
+.tasks-page .tasks-container .tasks > div h3 {
 	font-size: 1rem;
 	font-weight: 500;
 }
 
 .dashboard .available-tasks .task p,
 .referrals-page .container .referral-link p,
-.tasks-page .container .tasks-progress p {
+.tasks-page .container .tasks-progress p,
+.tasks-page .tasks-container .tasks > div p {
 	font-size: 0.75rem;
 	font-weight: 300;
 }
 
-.dashboard .available-tasks .task a {
+.dashboard .available-tasks .task a,
+.tasks-page .tasks-container .tasks > div a {
 	text-decoration: none;
 	color: #131338;
-	background-image: linear-gradient(#2e72ff, #7ba7ff);
-	padding: 0.5rem 0.75rem 0.25rem;
+	background-color: white;
+	padding: 0.25rem 0.5rem 0;
 	border-radius: 6px;
 	font-size: 0.75rem;
-	font-weight: 600;
+	font-weight: 500;
 	transition: 0.3s linear transform;
 }
 
-.dashboard .available-tasks .task a:active {
+.dashboard .available-tasks .task a:active,
+.tasks-page .tasks-container .tasks > div a:active {
 	transform: scale(0.9);
 }
 
@@ -487,6 +512,44 @@ html {
 	line-height: 1;
 }
 
+.tasks-page .tasks-container {
+	margin-top: 2.5rem;
+}
+
+.tasks-page .tasks-container .tasks {
+	opacity: 0;
+	animation: animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+		forwards;
+}
+
+.tasks-page .nav-buttons-container {
+	animation: animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+		forwards;
+	opacity: 0;
+	display: flex;
+	gap: 1rem;
+}
+
+.tasks-page .nav-buttons-container button {
+	font-size: 0.75rem;
+	border-radius: 999px;
+	border: none;
+	background-color: unset;
+	cursor: pointer;
+	transition: 0.2s linear transform;
+	color: #aaa;
+}
+
+.tasks-page .nav-buttons-container button.active {
+	color: #fff;
+	font-weight: 700;
+	font-size: 1rem;
+}
+
+.tasks-page .nav-buttons-container button:active {
+	transform: scale(0.9);
+}
+
 .referrals-page .container .referral-link div:nth-child(2) {
 	display: flex;
 	align-items: center;
@@ -506,7 +569,7 @@ html {
 .referrals-page .container .referral-link div:nth-child(2) button {
 	color: #131338;
 	border: none;
-	background-image: linear-gradient(#2e72ff, #7ba7ff);
+	background-image: linear-gradient(#2e72ff, #628cff);
 	padding: 0.5rem 0.75rem 0.25rem;
 	border-radius: 6px;
 	font-size: 0.75rem;
@@ -525,7 +588,7 @@ html {
 }
 
 .referrals-page .container .referrals-list table thead td {
-	font-weight: 600;
+	font-weight: 500;
 	padding: 0.5rem 0.25rem;
 }
 
@@ -539,6 +602,16 @@ html {
 	overflow: clip;
 	text-overflow: ellipsis;
 	max-width: 150px;
+}
+
+/* ANIMATION CLASSES */
+.animate-pulse {
+	animation: pulse 1.5s linear infinite alternate;
+}
+
+.fade-in {
+	opacity: 0;
+	animation: fade-in 1.5s linear forwards;
 }
 
 /* ANIMATIONS */
@@ -685,6 +758,33 @@ html {
 	}
 	to {
 		transform: translatex(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes spin {
+	from {
+		transform: rotatez(0deg);
+	}
+	to {
+		transform: rotatez(360deg);
+	}
+}
+
+@keyframes pulse {
+	from {
+		opacity: 0.5;
+	}
+	to {
 		opacity: 1;
 	}
 }

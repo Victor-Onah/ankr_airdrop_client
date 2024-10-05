@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import { BiCopy } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
+import { AppCtx } from "../../App";
+import PendingReferralsUi from "../../components/referrals-optimistic-ui";
+import getReferralMessage from "../../../utils/get-referral-message";
 
 const ReferralsPage = () => {
+	const { state } = useContext(AppCtx);
+	const { user, referees } = state;
 	return (
 		<div className="referrals-page">
 			<header>
@@ -14,7 +20,7 @@ const ReferralsPage = () => {
 						<p>Share this link with your friends to earn rewards</p>
 					</div>
 					<div>
-						<input type="text" readOnly value={"Axdf2JiT3Z"} />
+						<input type="text" readOnly value={user.referralCode} />
 						<button>
 							<BiCopy /> Copy
 						</button>
@@ -24,8 +30,20 @@ const ReferralsPage = () => {
 					<FaUsers className="card-icon" />
 					<h3>Referrals</h3>
 					<div>
-						<h2>22</h2>
-						<p>You haven't referred anyone today</p>
+						<h2>{user.totalReferrals.toLocaleString()}</h2>
+						{referees ? (
+							<p className="fade-in">
+								{getReferralMessage(referees)}
+							</p>
+						) : (
+							<div
+								className="animate-pulse"
+								style={{
+									height: 16,
+									background: "#444",
+									borderRadius: 6
+								}}></div>
+						)}
 					</div>
 				</section>
 				<section className="referrals-rewards">
@@ -47,8 +65,9 @@ const ReferralsPage = () => {
 					</svg>
 					<h3>Earnings from Referrals</h3>
 					<div>
-						<h2>2,000 ANK</h2>
-						<p>You haven't earned any rewards today</p>
+						<h2>
+							{(user.totalReferrals * 10).toLocaleString()} ANKR
+						</h2>
 					</div>
 				</section>
 				<section className="referrals-list">
@@ -57,47 +76,59 @@ const ReferralsPage = () => {
 						<p>List of friends you've referred</p>
 					</div>
 					<div style={{ overflow: "auto" }}>
-						<table>
-							<thead>
-								<tr>
-									<td>Username</td>
-									<td>Date joined</td>
-									<td>Status</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>justinicey</td>
-									<td>01/12/2033</td>
-									<td>Active</td>
-								</tr>
-								<tr>
-									<td>ugobest</td>
-									<td>04/2/2021</td>
-									<td>Active</td>
-								</tr>
-								<tr>
-									<td>justinicey</td>
-									<td>01/12/2033</td>
-									<td>Inactive</td>
-								</tr>
-								<tr>
-									<td>ugobest</td>
-									<td>04/2/2021</td>
-									<td>Active</td>
-								</tr>
-								<tr>
-									<td>justinicey</td>
-									<td>01/12/2033</td>
-									<td>Inactive</td>
-								</tr>
-								<tr>
-									<td>ugobest</td>
-									<td>04/2/2021</td>
-									<td>Inactive</td>
-								</tr>
-							</tbody>
-						</table>
+						{referees ? (
+							referees.length > 0 ? (
+								<table>
+									<thead>
+										<tr>
+											<td>Username</td>
+											<td>Date joined</td>
+											<td>Last Seen</td>
+										</tr>
+									</thead>
+									<tbody>
+										{referees.map(referee => (
+											<tr>
+												<td>{referee.username}</td>
+												<td>
+													{new Date(
+														referee.dateJoined
+													).toLocaleDateString()}
+												</td>
+												<td>
+													{referee.lastSignedIn
+														? new Date(
+																referee.lastSignedIn
+														  ).toLocaleDateString()
+														: "Not signed in"}
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							) : (
+								<p
+									style={{
+										textAlign: "center",
+										fontSize: "1rem"
+									}}>
+									<small>You haven't referred anyone</small>
+								</p>
+							)
+						) : (
+							<div>
+								<table>
+									<thead>
+										<tr>
+											<td>Username</td>
+											<td>Date joined</td>
+											<td>Last Seen</td>
+										</tr>
+									</thead>
+								</table>
+								<PendingReferralsUi />
+							</div>
+						)}
 					</div>
 				</section>
 			</div>

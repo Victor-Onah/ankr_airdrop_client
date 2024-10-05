@@ -1,6 +1,19 @@
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { AppCtx } from "../App";
+import { CgSpinner } from "react-icons/cg";
+import fetchUser from "../../utils/fetch-user";
 
 const LandingPage = () => {
+	const { state, dispatch } = useContext(AppCtx);
+	const redirectURL = new URLSearchParams(window.location.search).get(
+		"redirect_to"
+	);
+
+	useEffect(() => {
+		fetchUser(dispatch);
+	}, []);
+
 	return (
 		<div className="landing-page">
 			<div className="bloop"></div>
@@ -37,9 +50,17 @@ const LandingPage = () => {
 					<span className="objective">Earn</span>
 				</div>
 			</div>
-			<Link to="/dashboard" className="animate-button">
-				Continue
-			</Link>
+			{state.user ? (
+				<Link
+					to={redirectURL || "/dashboard"}
+					className="animate-button">
+					Continue
+				</Link>
+			) : (
+				<div className="spinner-container">
+					<CgSpinner className="spinner" style={{ fontSize: 36 }} />
+				</div>
+			)}
 		</div>
 	);
 };
