@@ -138,10 +138,11 @@ const Dashboard = () => {
 												<h3>{task.title}</h3>
 												<p>{task.reward} ANKR</p>
 											</div>
-											<Link
-												to={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
+											<a
+												target="_blank"
+												href={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
 												Start
-											</Link>
+											</a>
 										</div>
 									))
 							) : (
