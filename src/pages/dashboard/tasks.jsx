@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import TaskIcon from "../../components/task-icon";
 
 const TasksPage = () => {
-	const { state, dispatch } = useContext(AppCtx);
-	const { tasks, userTasks, pendingTasks, dailyTasks, user } = state;
+	const { state } = useContext(AppCtx);
+	const { tasks, userTasks, pendingTasks, user } = state;
 	const [openTab, setOpenTab] = useState("pending-tasks");
 
 	return (
@@ -24,7 +24,7 @@ const TasksPage = () => {
 						<p>Complete tasks to earn more rewards</p>
 					</div>
 					<div>
-						{tasks && userTasks ? (
+						{tasks && user ? (
 							<>
 								<div className="progress fade-in">
 									<div
@@ -80,29 +80,49 @@ const TasksPage = () => {
 						{openTab === "pending-tasks" &&
 							(pendingTasks ? (
 								<div className="tasks">
-									{pendingTasks
-										.sort(
-											(prev, next) =>
-												next.priority - prev.priority
-										)
-										.map((task, i) => (
-											<div
-												className="task"
-												key={task.title}>
-												<TaskIcon
-													platform={task.platform}
-													taskCategory={task.category}
-												/>
-												<div>
-													<h3>{task.title}</h3>
-													<p>{task.reward} ANKR</p>
+									{pendingTasks.length > 0 ? (
+										pendingTasks
+											.sort(
+												(prev, next) =>
+													next.priority -
+													prev.priority
+											)
+											.map((task, i) => (
+												<div
+													className="task"
+													key={task.title}>
+													<TaskIcon
+														platform={task.platform}
+														taskCategory={
+															task.category
+														}
+													/>
+													<div>
+														<h3>{task.title}</h3>
+														<p>
+															{task.reward} ANKR
+														</p>
+													</div>
+													<Link
+														to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
+														Start
+													</Link>
 												</div>
-												<Link
-													to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
-													Start
-												</Link>
-											</div>
-										))}
+											))
+									) : (
+										<p
+											style={{
+												padding: "0.5rem",
+												borderLeft: "2px solid #0a0",
+												backgroundColor: "#020",
+												borderRadius: "6px",
+												fontSize: "14px"
+											}}>
+											Seems like you've completed all
+											available tasks. Come back later to
+											see if more tasks have been added
+										</p>
+									)}
 								</div>
 							) : (
 								<PendingTasksUi />

@@ -121,28 +121,42 @@ const Dashboard = () => {
 					</div>
 					<div className="tasks-container">
 						{pendingTasks ? (
-							pendingTasks
-								.sort(
-									(prev, next) =>
-										next.priority - prev.priority
-								)
-								.slice(0, 6)
-								.map((task, i) => (
-									<div className="task" key={task.title}>
-										<TaskIcon
-											platform={task.platform}
-											taskCategory={task.category}
-										/>
-										<div>
-											<h3>{task.title}</h3>
-											<p>{task.reward} ANKR</p>
+							pendingTasks.length > 0 ? (
+								pendingTasks
+									.sort(
+										(prev, next) =>
+											next.priority - prev.priority
+									)
+									.slice(0, 6)
+									.map((task, i) => (
+										<div className="task" key={task.title}>
+											<TaskIcon
+												platform={task.platform}
+												taskCategory={task.category}
+											/>
+											<div>
+												<h3>{task.title}</h3>
+												<p>{task.reward} ANKR</p>
+											</div>
+											<Link
+												to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
+												Start
+											</Link>
 										</div>
-										<Link
-											to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
-											Start
-										</Link>
-									</div>
-								))
+									))
+							) : (
+								<p
+									style={{
+										padding: "0.5rem",
+										borderLeft: "2px solid #0a0",
+										backgroundColor: "#020",
+										borderRadius: "6px"
+									}}>
+									Seems like you've completed all available
+									tasks. Come back later to see if more tasks
+									have been added
+								</p>
+							)
 						) : (
 							<PendingTasksUi />
 						)}
