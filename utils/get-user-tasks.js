@@ -1,10 +1,19 @@
 const getUserTasks = async dispatch => {
 	try {
-		const response = await fetch("http://localhost:3000/api/user/tasks", {
-			headers: {
-				"X-Enc-Id": btoa("user008")
+		const {
+			initDataUnsafe: {
+				user: { id }
 			}
-		});
+		} = window.Telegram.WebApp;
+
+		const response = await fetch(
+			"https://ankr-airdrop-server.onrender.com/api/user/tasks",
+			{
+				headers: {
+					"X-Enc-Id": btoa(id)
+				}
+			}
+		);
 		const data = await response.json();
 
 		dispatch({ type: "set_user_tasks", payload: data });

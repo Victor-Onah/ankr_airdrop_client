@@ -104,7 +104,7 @@ const TasksPage = () => {
 														</p>
 													</div>
 													<Link
-														to={`http://localhost:3000/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
+														to={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
 														Start
 													</Link>
 												</div>

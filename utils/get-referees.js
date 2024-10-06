@@ -1,10 +1,16 @@
 const getReferees = async dispatch => {
 	try {
+		const {
+			initDataUnsafe: {
+				user: { id }
+			}
+		} = window.Telegram.WebApp;
+
 		const response = await fetch(
-			"http://localhost:3000/api/user/referees",
+			"https://ankr-airdrop-server.onrender.com/api/user/referees",
 			{
 				headers: {
-					"X-Enc-Id": btoa("user008")
+					"X-Enc-Id": btoa(id)
 				}
 			}
 		);

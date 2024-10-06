@@ -1,20 +1,32 @@
 const fetchUser = async dispatch => {
-	try {
-		const response = await fetch("http://localhost:3000/api/user/", {
-			headers: {
-				"X-Enc-Id": btoa("user008")
+	if (window.Telegram.WebApp) {
+		const {
+			initDataUnsafe: {
+				user: { id }
 			}
-		});
-		const data = await response.json();
+		} = window.Telegram.WebApp;
 
-		dispatch({ type: "set_user", payload: data });
-	} catch (error) {
-		console.error(error);
-		alert(error.toString());
+		try {
+			const response = await fetch(
+				"https://ankr-airdrop-server.onrender.com/api/user/",
+				{
+					headers: {
+						"X-Enc-Id": btoa(id)
+					}
+				}
+			);
+			const data = await response.json();
 
-		setTimeout(() => {
-			fetchUser(dispatch);
-		}, 10_000);
+			dispatch({ type: "set_user", payload: data });
+		} catch (error) {
+			console.error(error);
+
+			setTimeout(() => {
+				fetchUser(dispatch);
+			}, 10_000);
+		}
+	} else {
+		fetchUser(dispatch);
 	}
 };
 
