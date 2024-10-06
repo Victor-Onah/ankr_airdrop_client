@@ -105,6 +105,7 @@ const TasksPage = () => {
 													</div>
 													<a
 														target="_blank"
+														rel="noopener noreferrer"
 														href={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
 														Start
 													</a>
