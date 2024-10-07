@@ -9,9 +9,11 @@ const fetchUser = async dispatch => {
 		try {
 			const response = await fetch(
 				"https://ankr-airdrop-server.onrender.com/api/user/",
+				// "http://localhost:3000/api/user/",
 				{
 					headers: {
 						"X-Enc-Id": btoa(id)
+						// "X-Enc-Id": btoa("user008")
 					}
 				}
 			);

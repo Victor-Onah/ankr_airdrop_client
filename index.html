@@ -8,6 +8,13 @@
 		<meta name="color-scheme" content="dark" />
 		<title>Ankr Airdrop</title>
 		<script src="https://telegram.org/js/telegram-web-app.js"></script>
+		<script>
+			if (window.Telegram.WebApp) {
+				window.Telegram.WebApp.setHeaderColor("bg_color", "#121212");
+				window.Telegram.WebApp.setHeaderColor("text_color", "light");
+				window.Telegram.WebApp.expand();
+			}
+		</script>
 	</head>
 	<body>
 		<div id="root"></div>

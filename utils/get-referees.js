@@ -8,9 +8,11 @@ const getReferees = async dispatch => {
 
 		const response = await fetch(
 			"https://ankr-airdrop-server.onrender.com/api/user/referees",
+			// "http://localhost:3000/api/user/referees",
 			{
 				headers: {
 					"X-Enc-Id": btoa(id)
+					// "X-Enc-Id": btoa("user008")
 				}
 			}
 		);

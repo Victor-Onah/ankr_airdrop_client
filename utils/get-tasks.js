@@ -2,6 +2,7 @@ const getTasks = async dispatch => {
 	try {
 		const response = await fetch(
 			"https://ankr-airdrop-server.onrender.com/api/tasks"
+			// "http://localhost:3000/api/tasks"
 		);
 		const data = await response.json();
 

@@ -141,25 +141,14 @@ const Dashboard = () => {
 											<a
 												target="_blank"
 												rel="noopener noreferrer"
-												href={
-													task.link ||
-													`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`
-												}>
+												href={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
 												Start
 											</a>
 										</div>
 									))
 							) : (
-								<p
-									style={{
-										padding: "0.5rem",
-										borderLeft: "2px solid #0a0",
-										backgroundColor: "#020",
-										borderRadius: "6px"
-									}}>
-									Seems like you've completed all available
-									tasks. Come back later to see if more tasks
-									have been added
+								<p style={{ textAlign: "center" }}>
+									No tasks to show
 								</p>
 							)
 						) : (

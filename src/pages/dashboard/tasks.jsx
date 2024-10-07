@@ -112,17 +112,8 @@ const TasksPage = () => {
 												</div>
 											))
 									) : (
-										<p
-											style={{
-												padding: "0.5rem",
-												borderLeft: "2px solid #0a0",
-												backgroundColor: "#020",
-												borderRadius: "6px",
-												fontSize: "14px"
-											}}>
-											Seems like you've completed all
-											available tasks. Come back later to
-											see if more tasks have been added
+										<p style={{ textAlign: "center" }}>
+											<small>No tasks to show</small>
 										</p>
 									)}
 								</div>

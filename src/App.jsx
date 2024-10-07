@@ -6,6 +6,7 @@ import ReferralsPage from "./pages/dashboard/referrals";
 import TasksPage from "./pages/dashboard/tasks";
 import NextTopLoader from "nextjs-toploader";
 import { createContext, useEffect, useReducer } from "react";
+import ProfilePage from "./pages/dashboard/profile";
 
 const defaultState = {
 	user: null,
@@ -55,6 +56,10 @@ function App() {
 						<Route
 							path="/dashboard/tasks"
 							element={<TasksPage />}
+						/>
+						<Route
+							path="/dashboard/profile"
+							element={<ProfilePage />}
 						/>
 					</Route>
 				</Routes>

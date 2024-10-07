@@ -477,11 +477,13 @@ html {
 }
 
 .referrals-page header,
+.profile-page header,
 .tasks-page header {
 	padding: 2.5rem 1rem 1rem;
 }
 
 .referrals-page h1,
+.profile-page h1,
 .tasks-page h1 {
 	font-size: 1.75rem;
 	font-weight: 900;
@@ -514,12 +516,6 @@ html {
 
 .tasks-page .tasks-container {
 	margin-top: 2.5rem;
-}
-
-.tasks-page .tasks-container .tasks {
-	opacity: 0;
-	animation: animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-		forwards;
 }
 
 .tasks-page .nav-buttons-container {
@@ -602,6 +598,52 @@ html {
 	overflow: clip;
 	text-overflow: ellipsis;
 	max-width: 150px;
+}
+
+.profile-page .container {
+	padding: 1rem;
+	animation: animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+		forwards;
+	opacity: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	padding: 1rem;
+}
+
+.profile-page .container .name {
+	text-align: center;
+}
+
+.profile-page .container .name h2 {
+	font-size: 1.25rem;
+	font-weight: 900;
+	line-height: 1;
+}
+
+.profile-page .container .name p {
+	font-size: 0.75rem;
+	color: #b0b0b0;
+}
+
+.profile-page .container .full-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	background-color: #222;
+	border-radius: 12px;
+	padding: 1rem;
+}
+
+.profile-page .container .full-info .info * {
+	line-height: 1.2;
+}
+.profile-page .container .full-info .info h3 {
+	font-size: 1rem;
+	font-weight: 600;
+}
+.profile-page .container .full-info .info p {
+	color: #b0b0b0;
 }
 
 /* ANIMATION CLASSES */
