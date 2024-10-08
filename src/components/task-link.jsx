@@ -71,7 +71,8 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
         const anchorTag = document.createElement("a");
 
         anchorTag["href"] =
-            `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+            // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+            `http://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
         anchorTag["rel"] = "noopener noreferrer";
         anchorTag["target"] = "_blank";
         anchorTag["style"]["display"] = "none";
