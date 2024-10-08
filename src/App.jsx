@@ -27,8 +27,6 @@ const reducer = (state, action) => {
 			return { ...state, tasks: action.payload };
 		case "set_user_tasks":
 			return { ...state, userTasks: action.payload };
-		case "set_daily_tasks":
-			return { ...state, dailyTasks: action.payload };
 		case "set_pending_tasks":
 			return { ...state, pendingTasks: action.payload };
 		default:

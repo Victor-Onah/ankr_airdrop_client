@@ -469,6 +469,11 @@ html {
 	font-size: 0.75rem;
 	font-weight: 500;
 	transition: 0.3s linear transform;
+	width: 50px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .dashboard .available-tasks .task a:active,
@@ -630,9 +635,9 @@ html {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
-	background-color: #222;
+	/*	background-color: #222;*/
 	border-radius: 12px;
-	padding: 1rem;
+	/*	padding: 1rem;*/
 }
 
 .profile-page .container .full-info .info * {
@@ -644,6 +649,51 @@ html {
 }
 .profile-page .container .full-info .info p {
 	color: #b0b0b0;
+}
+
+.toasts-container {
+	position: fixed;
+	overflow: hidden;
+	width: 100%;
+	max-width: 360px;
+	left: 50%;
+	top: 0;
+	bottom: 0;
+	transform: translateX(-50%);
+	z-index: 9999;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	padding: 0.5rem;
+}
+
+.toasts-container .toast {
+	padding: 0.5rem 0.5rem 0.25rem;
+	background-color: #113;
+	color: #ddddff;
+	border-radius: 6px;
+	transition: 0.3s linear all;
+	text-align: center;
+	width: fit-content;
+	margin: 0 auto;
+	font-size: 14px;
+}
+
+.toasts-container .toast.success {
+	background-color: #131;
+	color: #ddffdd;
+}
+
+.toasts-container .toast.error {
+	background-color: #311;
+	color: #ffdddd;
+}
+
+.toasts-container .toast.warning {
+	background-color: #331;
+	color: #ffffdd;
 }
 
 /* ANIMATION CLASSES */

@@ -2,13 +2,14 @@ import { useContext, useState } from "react";
 import { AppCtx } from "../../App";
 import {
 	CompletedTasksUi,
-	PendingTasksUi
+	PendingTasksUi,
 } from "../../components/tasks-optimstic-ui";
 import { Link } from "react-router-dom";
 import TaskIcon from "../../components/task-icon";
+import TaskLink from "../../components/task-link";
 
 const TasksPage = () => {
-	const { state } = useContext(AppCtx);
+	const { state, dispatch } = useContext(AppCtx);
 	const { tasks, userTasks, pendingTasks, user } = state;
 	const [openTab, setOpenTab] = useState("pending-tasks");
 
@@ -33,8 +34,9 @@ const TasksPage = () => {
 												(user.totalTasksCompleted /
 													tasks.length) *
 												100
-											}%`
-										}}></div>
+											}%`,
+										}}
+									></div>
 								</div>
 								<div>
 									<sup>
@@ -50,8 +52,9 @@ const TasksPage = () => {
 									height: 16,
 									background: "#444",
 									borderRadius: 6,
-									flex: 1
-								}}></div>
+									flex: 1,
+								}}
+							></div>
 						)}
 					</div>
 				</section>
@@ -59,14 +62,16 @@ const TasksPage = () => {
 					<div className="nav-buttons-container">
 						<button
 							onClick={() => setOpenTab("pending-tasks")}
-							className={openTab === "pending-tasks" && "active"}>
+							className={openTab === "pending-tasks" && "active"}
+						>
 							Pending
 						</button>
 						<button
 							onClick={() => setOpenTab("completed-tasks")}
 							className={
 								openTab === "completed-tasks" && "active"
-							}>
+							}
+						>
 							Completed
 						</button>
 					</div>
@@ -75,8 +80,9 @@ const TasksPage = () => {
 							marginTop: "1.5rem",
 							animation:
 								"animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards",
-							opacity: 0
-						}}>
+							opacity: 0,
+						}}
+					>
 						{openTab === "pending-tasks" &&
 							(pendingTasks ? (
 								<div className="tasks">
@@ -85,12 +91,13 @@ const TasksPage = () => {
 											.sort(
 												(prev, next) =>
 													next.priority -
-													prev.priority
+													prev.priority,
 											)
 											.map((task, i) => (
 												<div
 													className="task"
-													key={task.title}>
+													key={task.title}
+												>
 													<TaskIcon
 														platform={task.platform}
 														taskCategory={
@@ -103,12 +110,12 @@ const TasksPage = () => {
 															{task.reward} ANKR
 														</p>
 													</div>
-													<a
-														target="_blank"
-														rel="noopener noreferrer"
-														href={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
-														Start
-													</a>
+													<TaskLink
+														dispatch={dispatch}
+														id={task.id}
+														link={task.link}
+														userId={user.id}
+													/>
 												</div>
 											))
 									) : (
@@ -128,7 +135,8 @@ const TasksPage = () => {
 										{userTasks.map((task, i) => (
 											<div
 												className="task"
-												key={task.title}>
+												key={task.title}
+											>
 												<TaskIcon
 													platform={task.platform}
 													taskCategory={task.category}
@@ -138,7 +146,7 @@ const TasksPage = () => {
 													<p>
 														{task.reward} ANKR •{" "}
 														{new Date(
-															task.completedAt
+															task.completedAt,
 														).toDateString()}
 													</p>
 												</div>

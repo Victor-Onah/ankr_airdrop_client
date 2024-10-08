@@ -5,11 +5,12 @@ import { FaUsers } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { AppCtx } from "../../App";
 import TaskIcon from "../../components/task-icon";
+import TaskLink from "../../components/task-link";
 import { PendingTasksUi } from "../../components/tasks-optimstic-ui";
 import getReferralMessage from "../../../utils/get-referral-message";
 
 const Dashboard = () => {
-	const { state } = useContext(AppCtx);
+	const { state, dispatch } = useContext(AppCtx);
 	const { user, referees, pendingTasks, userTasks, tasks } = state;
 
 	return (
@@ -21,7 +22,8 @@ const Dashboard = () => {
 						height="16"
 						viewBox="0 0 109 34"
 						width="51.3"
-						xmlns="http://www.w3.org/2000/svg">
+						xmlns="http://www.w3.org/2000/svg"
+					>
 						<clipPath id="a83e6c200bd1">
 							<path d="m0 0h109v34h-109z"></path>
 						</clipPath>
@@ -49,7 +51,8 @@ const Dashboard = () => {
 						stroke-linejoin="round"
 						stroke-miterlimit="2"
 						viewBox="0 0 560 400"
-						xmlns="http://www.w3.org/2000/svg">
+						xmlns="http://www.w3.org/2000/svg"
+					>
 						<path
 							d="m21.4.6 13.1 6.7c1.9 1 3.1 2.9 3.1 5.1v3.1h-4.8v-3.1c0-.3-.2-.6-.5-.8l-13.1-6.7c-.2-.1-.5-.1-.8 0l-13.1 6.7c-.3.1-.5.4-.5.8v3.1h-4.8v-3.1c0-2.1 1.2-4.1 3.1-5.1l13.1-6.7c1.6-.8 3.5-.8 5.2 0zm1.5 19.2c0-2.3-1.9-4.1-4.1-4.1-2.3 0-4.1 1.8-4.1 4.1s1.9 4.1 4.1 4.1 4.1-1.8 4.1-4.1zm9.3 8.6c.3-.1.5-.4.5-.8v-3.1h4.8v3.1c0 2.1-1.2 4.1-3.1 5.1l-13.1 6.7c-.8.4-1.7.6-2.6.6s-1.8-.2-2.6-.6l-13-6.7c-1.9-1-3.1-2.9-3.1-5.1v-3.1h4.8v3.1c0 .3.2.6.5.8l11.1 5.6v-5.6c-3.8-1.1-6.5-4.5-6.5-8.6 0-4.9 4-9 9-9 4.9 0 9 4 9 9 0 4.1-2.8 7.6-6.5 8.6v5.6z"
 							fill="#ccccff"
@@ -74,8 +77,9 @@ const Dashboard = () => {
 								style={{
 									height: 16,
 									background: "#444",
-									borderRadius: 6
-								}}></div>
+									borderRadius: 6,
+								}}
+							></div>
 						)}
 					</div>
 				</section>
@@ -92,8 +96,9 @@ const Dashboard = () => {
 												(user.totalTasksCompleted /
 													tasks.length) *
 												100
-											}%`
-										}}></div>
+											}%`,
+										}}
+									></div>
 								</div>
 								<div>
 									<sup>
@@ -109,8 +114,9 @@ const Dashboard = () => {
 									height: 16,
 									background: "#444",
 									borderRadius: 6,
-									flex: 1
-								}}></div>
+									flex: 1,
+								}}
+							></div>
 						)}
 					</div>
 				</section>
@@ -125,7 +131,7 @@ const Dashboard = () => {
 								pendingTasks
 									.sort(
 										(prev, next) =>
-											next.priority - prev.priority
+											next.priority - prev.priority,
 									)
 									.slice(0, 6)
 									.map((task, i) => (
@@ -138,12 +144,12 @@ const Dashboard = () => {
 												<h3>{task.title}</h3>
 												<p>{task.reward} ANKR</p>
 											</div>
-											<a
-												target="_blank"
-												rel="noopener noreferrer"
-												href={`https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${task.id}&redirect_to=${task.link}&from=${window.location.href}&id=${user.id}`}>
-												Start
-											</a>
+											<TaskLink
+												dispatch={dispatch}
+												id={task.id}
+												link={task.link}
+												userId={user.id}
+											/>
 										</div>
 									))
 							) : (

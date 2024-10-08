@@ -1,9 +1,11 @@
-const fetchUser = async dispatch => {
+import toast from "./toast";
+
+const fetchUser = async (dispatch) => {
 	if (window.Telegram.WebApp) {
 		const {
 			initDataUnsafe: {
-				user: { id }
-			}
+				user: { id },
+			},
 		} = window.Telegram.WebApp;
 
 		try {
@@ -12,10 +14,10 @@ const fetchUser = async dispatch => {
 				// "http://localhost:3000/api/user/",
 				{
 					headers: {
-						"X-Enc-Id": btoa(id)
+						"X-Enc-Id": btoa(id),
 						// "X-Enc-Id": btoa("user008")
-					}
-				}
+					},
+				},
 			);
 			const data = await response.json();
 
@@ -23,12 +25,16 @@ const fetchUser = async dispatch => {
 		} catch (error) {
 			console.error(error);
 
+			toast.error("Failed to fetch data. Retrying...");
+
 			setTimeout(() => {
 				fetchUser(dispatch);
 			}, 10_000);
 		}
 	} else {
-		fetchUser(dispatch);
+		setTimeout(() => {
+			fetchUser(dispatch);
+		}, 10_000);
 	}
 };
 

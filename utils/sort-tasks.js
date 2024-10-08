@@ -10,12 +10,7 @@ const sortTasks = (state, dispatch) => {
 			return isTaskDone ? false : true;
 		});
 
-		const sortedDailyTasks = sortedPendingTasks.filter(
-			task => task.recurrence === "daily"
-		);
-
 		dispatch({ type: "set_pending_tasks", payload: sortedPendingTasks });
-		dispatch({ type: "set_daily_tasks", payload: sortedDailyTasks });
 	}
 };
 
