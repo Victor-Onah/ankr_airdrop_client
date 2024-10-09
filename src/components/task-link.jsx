@@ -28,7 +28,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
                 // `http://localhost:3000/api/user/tasks/confirm?task_id=${id}`,
                 {
                     headers: {
-                        "X-Enc-Id": btoa(id),
+                        "X-Enc-Id": btoa(userId),
                         // "X-Enc-Id": btoa("user008"),
                     },
                 },
