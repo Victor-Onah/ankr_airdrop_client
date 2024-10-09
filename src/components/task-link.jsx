@@ -9,8 +9,6 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
     const [confirming, setConfirming] = useState(false);
     const [showConfirmButton, setShowConfirmButton] = useState(false);
 
-    console.log(link);
-
     const celebrate = () => {
         confetti({
             particleCount: 100,
@@ -35,14 +33,13 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
             );
 
             if (!response.ok && trials < 5) {
-                return setTimeout(
-                    () => confirmTaskCompletion(trials + 1),
-                    5_000,
-                );
+                setTimeout(() => confirmTaskCompletion(trials + 1), 5_000);
+
+                toast.error("Task confirmation failed. Retrying...");
             }
             if (!response.ok) {
                 setShowConfirmButton(false);
-                return setConfirming(false);
+                setConfirming(false);
             }
 
             await Promise.all([fetchUser(dispatch), getUserTasks(dispatch)]);
@@ -65,14 +62,15 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
         }
     };
 
-    const handleTaskStart = (e) => {
+    const handleTaskStart = async (e) => {
         e.preventDefault();
 
+        const initializationLink =
+            `http://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+            // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
         const anchorTag = document.createElement("a");
 
-        anchorTag["href"] =
-            // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
-            `http://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+        anchorTag["href"] = link;
         anchorTag["rel"] = "noopener noreferrer";
         anchorTag["target"] = "_blank";
         anchorTag["style"]["display"] = "none";
@@ -84,7 +82,13 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
         setShowConfirmButton(true);
         setConfirming(true);
 
-        setTimeout(() => setConfirming(false), 5_000);
+        try {
+            await fetch(initializationLink);
+        } catch (error) {
+            console.log("Task initialization error: ", error);
+        } finally {
+            setTimeout(() => setConfirming(false), 5_000);
+        }
     };
 
     return (

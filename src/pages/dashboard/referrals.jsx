@@ -4,21 +4,23 @@ import { FaUsers } from "react-icons/fa";
 import { AppCtx } from "../../App";
 import PendingReferralsUi from "../../components/referrals-optimistic-ui";
 import getReferralMessage from "../../../utils/get-referral-message";
-import toast from '../../../utils/toast'
+import toast from "../../../utils/toast";
 
 const ReferralsPage = () => {
 	const { state } = useContext(AppCtx);
 	const { user, referees } = state;
 	const copyLink = async () => {
 		try {
-			await window.navigator.clipboard.writeText(`https://t.me/ankr_airdrop_bot?start=${user.referralCode}`)
+			await window.navigator.clipboard.writeText(
+				`https://t.me/ankr_airdrop_bot?start=${user.referralCode}`,
+			);
 
-			toast.success('Link copied!')
+			toast.success("Link copied!");
 		} catch (error) {
-			toast.error('Failed to copy!')
+			toast.error("Failed to copy!");
 		}
-	}
-	
+	};
+
 	return (
 		<div className="referrals-page">
 			<header>
@@ -100,7 +102,7 @@ const ReferralsPage = () => {
 										<tr>
 											<td>Username</td>
 											<td>Date joined</td>
-											<td>Last Seen</td>
+											<td>Earnings</td>
 										</tr>
 									</thead>
 									<tbody>
@@ -112,12 +114,13 @@ const ReferralsPage = () => {
 														referee.dateJoined,
 													).toLocaleDateString()}
 												</td>
-												<td>
-													{referee.lastSignedIn
-														? new Date(
-																referee.lastSignedIn,
-															).toLocaleDateString()
-														: "Not signed in"}
+												<td
+													style={{
+														textAlign: "right",
+													}}
+												>
+													{referee.balance.toLocaleString()}{" "}
+													ANKR
 												</td>
 											</tr>
 										))}
@@ -140,7 +143,7 @@ const ReferralsPage = () => {
 										<tr>
 											<td>Username</td>
 											<td>Date joined</td>
-											<td>Last Seen</td>
+											<td>Earnings</td>
 										</tr>
 									</thead>
 								</table>

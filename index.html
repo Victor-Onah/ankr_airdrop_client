@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -9,11 +9,15 @@
 		<title>Ankr Airdrop</title>
 		<script src="https://telegram.org/js/telegram-web-app.js"></script>
 		<script>
-			if (window.Telegram.WebApp) {
-				window.Telegram.WebApp.setHeaderColor("bg_color", "#121212");
-				window.Telegram.WebApp.setHeaderColor("text_color", "light");
-				window.Telegram.WebApp.expand();
-			}
+			window.addEventListener("DOMContentLoaded", () => {
+				if (Telegram.WebApp) {
+					Telegram.WebApp.ready(() => {
+						Telegram.WebApp.setHeaderColor("bg_color", "#121212");
+						Telegram.WebApp.setHeaderColor("text_color", "light");
+						Telegram.WebApp.expand();
+					});
+				}
+			});
 		</script>
 	</head>
 	<body>

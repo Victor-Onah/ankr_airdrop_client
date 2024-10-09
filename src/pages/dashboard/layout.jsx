@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { BiHome } from "react-icons/bi";
-import { FaUsers, FaTasks, FaUser } from "react-icons/fa";
+import { FaUsers, FaTasks, FaWallet } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { AppCtx } from "../../App";
 import getReferees from "../../../utils/get-referees";
@@ -64,11 +64,11 @@ const DashboardLayout = () => {
 				</Link>
 				<Link
 					className={
-						location.pathname === "/dashboard/profile" && "active"
+						location.pathname === "/dashboard/wallet" && "active"
 					}
-					to="/dashboard/profile">
-					<FaUser />
-					<small style={{ fontSize: "0.65rem" }}>Profile</small>
+					to="/dashboard/wallet">
+					<FaWallet />
+					<small style={{ fontSize: "0.65rem" }}>Wallet</small>
 				</Link>
 			</footer>
 		</div>

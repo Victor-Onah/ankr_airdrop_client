@@ -270,7 +270,7 @@ html {
 		forwards;
 	opacity: 0;
 }
-.dashboard header a {
+.dashboard header > div:nth-child(2) {
 	color: inherit;
 	display: flex;
 	align-items: center;
@@ -287,9 +287,6 @@ html {
 	transition: 0.2s linear transform;
 }
 
-.dashboard header a:active {
-	transform: scale(0.9);
-}
 
 .dashboard .price {
 	display: flex;
@@ -605,50 +602,34 @@ html {
 	max-width: 150px;
 }
 
-.profile-page .container {
-	padding: 1rem;
-	animation: animate-to-top 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-		forwards;
-	opacity: 0;
+.wallet-page {
+	min-height: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
-	padding: 1rem;
+	justify-content: center;
+	align-items: center;
 }
 
-.profile-page .container .name {
-	text-align: center;
+.wallet-page .wallet-img-container {
+	position: relative;
 }
 
-.profile-page .container .name h2 {
-	font-size: 1.25rem;
-	font-weight: 900;
-	line-height: 1;
+.wallet-page .wallet-img-container .bloop {
+	position: absolute;
+	height: 300px;
+	width: 300px;
+	background-color: #2e72ff;
+	border-radius: 50%;
+	filter: blur(50px);
+	z-index: 0;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
-.profile-page .container .name p {
-	font-size: 0.75rem;
-	color: #b0b0b0;
-}
-
-.profile-page .container .full-info {
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
-	/*	background-color: #222;*/
-	border-radius: 12px;
-	/*	padding: 1rem;*/
-}
-
-.profile-page .container .full-info .info * {
-	line-height: 1.2;
-}
-.profile-page .container .full-info .info h3 {
-	font-size: 1rem;
-	font-weight: 600;
-}
-.profile-page .container .full-info .info p {
-	color: #b0b0b0;
+.wallet-page *:not(.bloop) {
+	z-index: 1;
+	position: relative;
 }
 
 .toasts-container {
@@ -666,7 +647,7 @@ html {
 	flex-direction: column-reverse;
 	gap: 0.5rem;
 	justify-content: flex-end;
-	padding: 0.5rem;
+	padding: 1rem 0.5rem;
 }
 
 .toasts-container .toast {

@@ -100,9 +100,7 @@ const TasksPage = () => {
 												>
 													<TaskIcon
 														platform={task.platform}
-														taskCategory={
-															task.category
-														}
+														imageUrl={task.imageUrl}
 													/>
 													<div>
 														<h3>{task.title}</h3>

@@ -4,9 +4,9 @@ import DashboardLayout from "./pages/dashboard/layout";
 import Dashboard from "./pages/dashboard";
 import ReferralsPage from "./pages/dashboard/referrals";
 import TasksPage from "./pages/dashboard/tasks";
+import WalletPage from "./pages/dashboard/wallet";
 import NextTopLoader from "nextjs-toploader";
 import { createContext, useEffect, useReducer } from "react";
-import ProfilePage from "./pages/dashboard/profile";
 
 const defaultState = {
 	user: null,
@@ -56,8 +56,8 @@ function App() {
 							element={<TasksPage />}
 						/>
 						<Route
-							path="/dashboard/profile"
-							element={<ProfilePage />}
+							path="/dashboard/wallet"
+							element={<WalletPage />}
 						/>
 					</Route>
 				</Routes>

@@ -37,9 +37,9 @@ const Dashboard = () => {
 						</g>
 					</svg>
 				</div>
-				<Link to="./profile">
-					<BiUser /> {user.username}
-				</Link>
+				<div to="./profile">
+					<BiUser /> {user.username || "default_username"}
+				</div>
 			</header>
 			<div className="main-container">
 				<section className="price">
@@ -138,7 +138,8 @@ const Dashboard = () => {
 										<div className="task" key={task.title}>
 											<TaskIcon
 												platform={task.platform}
-												taskCategory={task.category}
+												imageUrl={task.imageUrl}
+
 											/>
 											<div>
 												<h3>{task.title}</h3>
