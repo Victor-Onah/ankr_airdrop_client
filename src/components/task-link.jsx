@@ -33,13 +33,13 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
             );
 
             if (!response.ok && trials < 5) {
-                setTimeout(() => confirmTaskCompletion(trials + 1), 5_000);
-
-                toast.error("Task confirmation failed. Retrying...");
+                setTimeout(() => confirmTaskCompletion(trials + 1), 3_000);
+                return
             }
             if (!response.ok) {
                 setShowConfirmButton(false);
                 setConfirming(false);
+                return;
             }
 
             await Promise.all([fetchUser(dispatch), getUserTasks(dispatch)]);
@@ -54,7 +54,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
             toast.error("Task confirmation failed");
 
             if (trials < 5) {
-                setTimeout(() => confirmTaskCompletion(trials + 1), 5_000);
+                setTimeout(() => confirmTaskCompletion(trials + 1), 3_000);
             } else {
                 setShowConfirmButton(false);
                 setConfirming(false);
@@ -66,7 +66,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
         e.preventDefault();
 
         const initializationLink =
-            `http://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+            `https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&id=${userId}`;
             // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
         const anchorTag = document.createElement("a");
 
@@ -87,7 +87,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
         } catch (error) {
             console.log("Task initialization error: ", error);
         } finally {
-            setTimeout(() => setConfirming(false), 5_000);
+            setTimeout(() => setConfirming(false), 3_000);
         }
     };
 

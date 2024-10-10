@@ -26,7 +26,7 @@ const getReferees = async (dispatch) => {
 
 		toast.error("Failed to fetch data. Retrying...");
 
-		setTimeout(() => getReferees(dispatch), 10_000);
+		setTimeout(() => getReferees(dispatch), 3_000);
 	}
 };
 

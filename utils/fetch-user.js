@@ -29,12 +29,12 @@ const fetchUser = async (dispatch) => {
 
 			setTimeout(() => {
 				fetchUser(dispatch);
-			}, 10_000);
+			}, 3_000);
 		}
 	} else {
 		setTimeout(() => {
 			fetchUser(dispatch);
-		}, 10_000);
+		}, 3_000);
 	}
 };
 

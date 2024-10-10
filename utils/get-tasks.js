@@ -14,7 +14,7 @@ const getTasks = async (dispatch) => {
 
 		toast.error("Failed to fetch data. Retrying...");
 
-		setTimeout(() => getTasks(dispatch), 10_000);
+		setTimeout(() => getTasks(dispatch), 3_000);
 	}
 };
 
