@@ -15,6 +15,8 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
             spread: 360,
             origin: { y: 0.5 },
         });
+
+        setTimeout(() => confetti.reset(), 1_500)
     };
 
     const confirmTaskCompletion = async (trials = 1) => {
