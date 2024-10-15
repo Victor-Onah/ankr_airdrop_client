@@ -16,7 +16,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
             origin: { y: 0.5 },
         });
 
-        setTimeout(() => confetti.reset(), 1_500)
+        setTimeout(() => confetti.reset(), 1_500);
     };
 
     const confirmTaskCompletion = async (trials = 1) => {
@@ -36,7 +36,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
 
             if (!response.ok && trials < 5) {
                 setTimeout(() => confirmTaskCompletion(trials + 1), 3_000);
-                return
+                return;
             }
             if (!response.ok) {
                 setShowConfirmButton(false);
@@ -67,20 +67,22 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
     const handleTaskStart = async (e) => {
         e.preventDefault();
 
-        const initializationLink =
-            `https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&id=${userId}`;
-            // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
+        const initializationLink = `https://ankr-airdrop-server.onrender.com/api/user/tasks/initialize?task_id=${id}&id=${userId}`;
+        // `http://localhost:3000/api/user/tasks/initialize?task_id=${id}&redirect_to=${link}&id=${userId}`;
         const anchorTag = document.createElement("a");
 
-        anchorTag["href"] = link;
-        anchorTag["rel"] = "noopener noreferrer";
-        anchorTag["target"] = "_blank";
-        anchorTag["style"]["display"] = "none";
+        if (link) {
+            anchorTag["href"] = link;
+            anchorTag["rel"] = "noopener noreferrer";
+            anchorTag["target"] = "_blank";
+            anchorTag["style"]["display"] = "none";
 
-        document.body.appendChild(anchorTag);
+            document.body.appendChild(anchorTag);
 
-        anchorTag.click();
-        anchorTag.remove();
+            anchorTag.click();
+            anchorTag.remove();
+        }
+
         setShowConfirmButton(true);
         setConfirming(true);
 
@@ -111,7 +113,7 @@ const TaskLink = ({ id, link, userId, dispatch }) => {
                             />
                         </span>
                     ) : (
-                        "Confirm"
+                        "Claim"
                     )}
                 </a>
             ) : (

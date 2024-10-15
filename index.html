@@ -9,15 +9,18 @@
 		<title>Ankr Airdrop</title>
 		<script src="https://telegram.org/js/telegram-web-app.js"></script>
 		<script>
-			window.addEventListener("DOMContentLoaded", () => {
+			const configTelegram = () => {
 				if (Telegram.WebApp) {
-					Telegram.WebApp.ready(() => {
-						Telegram.WebApp.setHeaderColor("bg_color", "#121212");
-						Telegram.WebApp.setHeaderColor("text_color", "light");
-						Telegram.WebApp.expand();
-					});
+					Telegram.WebApp.ready();
+					Telegram.WebApp.setHeaderColor("bg_color", "#121212");
+					Telegram.WebApp.setHeaderColor("text_color", "light");
+					Telegram.WebApp.expand();
+				} else {
+					setTimeout(() => configTelegram(), 1000)
 				}
-			});
+			}
+
+			window.addEventListener("DOMContentLoaded", configTelegram);
 		</script>
 	</head>
 	<body>
